@@ -1,7 +1,9 @@
+//Initiate Calculation
 function StartCalculate(){
     ReadInputs();
 }
 
+//Read Inputs and initiate Calculate
 function ReadInputs(){
     let a = parseInt(document.getElementById("ainput").value);
     let b = parseInt(document.getElementById("binput").value);
@@ -9,6 +11,7 @@ function ReadInputs(){
     Calculate(a, b, n);
 }
 
+//Calculate Function to initiate calculation of Trapezoid Rule and Simpson's Rule
 function Calculate(a, b, n){
     let deltaX = ((b-a)/n);
     let x = a;
@@ -20,6 +23,7 @@ function Calculate(a, b, n){
     SimpsonRule(a, b, deltaX, x, functionOfX, sum, answer);
 }
 
+//Trapezoid Rule
 function TrapezoidRule(a, b, deltaX, x, functionOfX, sum, answer){
     
     for (let i = a; i <= b; i += deltaX){
@@ -39,6 +43,7 @@ function TrapezoidRule(a, b, deltaX, x, functionOfX, sum, answer){
     document.getElementById("outputT").innerHTML = "T: " + answer;
 }
 
+//Simpson's Rule
 function SimpsonRule(a, b, deltaX, x, functionOfX, sum, answer){
 
     let counter = 0;

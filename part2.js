@@ -1,10 +1,12 @@
 let functionP;
 let functionQ;
 
+//Initiate Calculation
 function StartCalculate(){
     ReadInputs();
 }
 
+//Read Inputs and initiate Calculate
 function ReadInputs(){
     const p = document.getElementById("pinput").value;
     const q = document.getElementById("qinput").value;
@@ -14,6 +16,7 @@ function ReadInputs(){
     Calculate(p, q, a, b, n);
 }
 
+//Calculate Function to initiate calculation of Trapezoid Rule and Simpson's Rule
 function Calculate(p, q, a, b, n){
     let deltaX = ((b-a)/n);
     let x = a;
@@ -25,6 +28,7 @@ function Calculate(p, q, a, b, n){
     SimpsonRule(p, q, a, b, deltaX, x, functionOfX, sum, answer);
 }
 
+//Trapezoid Rule
 function TrapezoidRule(p, q, a, b, deltaX, x, functionOfX, sum, answer){
 
     for (let i = a; i <= b; i += deltaX){
@@ -48,6 +52,7 @@ function TrapezoidRule(p, q, a, b, deltaX, x, functionOfX, sum, answer){
     document.getElementById("outputT").innerHTML = "T: " + answer;
 }
 
+//Simpson's Rule
 function SimpsonRule(p, q, a, b, deltaX, x, functionOfX, sum, answer){
 
     let counter = 0;
@@ -83,18 +88,22 @@ function SimpsonRule(p, q, a, b, deltaX, x, functionOfX, sum, answer){
     document.getElementById("outputS").innerHTML = "S: " + answer;
 }
 
+//Read Function of P(x)
 const userDefP = (expression, x) => {
     const f = math.parser();
     f.set('x', x);
     return f.evaluate(expression);
 };
 
+//Read Function of Q(x)
 const userDefQ = (expression, x) => {
     const f = math.parser();
     f.set('x', x);
     return f.evaluate(expression);
 };
 
+
+//Clear Input
 function ClearInput(){
     document.getElementById("pinput").value = "";
     document.getElementById("qinput").value = "";
@@ -103,6 +112,7 @@ function ClearInput(){
     document.getElementById("ninput").value = "";
 }
 
+//Clear Output
 function ClearOutput(){
     document.getElementById("outputS").innerHTML = "S: ";
     document.getElementById("outputT").innerHTML = "T: ";
