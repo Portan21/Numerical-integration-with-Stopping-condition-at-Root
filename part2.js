@@ -6,7 +6,9 @@ let c;
 
 //Initiate Calculation
 function StartCalculate(){
-    ReadInputs();
+    ClearOutput();
+    ShowLoading();
+    setTimeout(ReadInputs, 10);
 }
 
 //Read Inputs and initiate Calculate
@@ -30,8 +32,10 @@ function Calculate(p, q, a, b, n){
     if (Bisection(a, b, p, q, deltaX) && Newton(a, b, p ,q) && Secant(a, b, p, q, deltaX)){
         TrapezoidRule(p, q, a, b, deltaX, x, functionOfX, sum, answer);
         SimpsonRule(p, q, a, b, deltaX, x, functionOfX, sum, answer);
+        HideLoading();
     }
     else{
+        HideLoading();
         document.getElementById("outputS").innerHTML = "S: ";
         document.getElementById("outputT").innerHTML = "T: ";
         document.getElementById("outputStop").innerHTML = "Stopped at " + c + " ∈ [" + a + ", " + b + "] on which";
@@ -300,4 +304,21 @@ function Newton(a, b, p ,q){
 
     }
     return true;
+}
+
+
+function ShowLoading() {
+    var elms = document.getElementsByClassName("cube");
+    console.log("Show");
+    Array.from(elms).forEach((x) => {
+          x.style.visibility = "visible";
+      })
+}
+
+function HideLoading() {
+    var elms = document.getElementsByClassName("cube");
+    console.log("Hide");
+    Array.from(elms).forEach((x) => {
+          x.style.visibility = "hidden";
+      })
 }
