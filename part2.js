@@ -29,9 +29,9 @@ function Calculate(p, q, a, b, n){
     let sum = 0;
     let answer;
     
-    if (Bisection(a, b, p, q, deltaX) && Newton(a, b, p ,q) && Secant(a, b, p, q, deltaX)){
-        TrapezoidRule(p, q, a, b, deltaX, x, functionOfX, sum, answer);
-        SimpsonRule(p, q, a, b, deltaX, x, functionOfX, sum, answer);
+    if (Bisection(a, b, q, deltaX) && Newton(a, b,q) && Secant(a, b, q, deltaX)){
+        TrapezoidRule(p, q, a, b, n, deltaX, x, functionOfX, sum, answer);
+        SimpsonRule(p, q, a, b, n, deltaX, x, functionOfX, sum, answer);
         HideLoading();
     }
     else{
@@ -41,28 +41,31 @@ function Calculate(p, q, a, b, n){
         document.getElementById("outputStop").innerHTML = "Stopped at " + c + " ∈ [" + a + ", " + b + "] on which";
         document.getElementById("outputStop2").innerHTML = "f(x) = (" + p + ") / (" + q + ") is not defined";
     }
-
-    
-
 }
 
 //Trapezoid Rule
-function TrapezoidRule(p, q, a, b, deltaX, x, functionOfX, sum, answer){
+function TrapezoidRule(p, q, a, b, n, deltaX, x, functionOfX, sum, answer){
 
     for (let i = a; i <= b; i += deltaX){
-        if (i == a || i ==b){
+        if (i == a || n == 0){
             functionP = math.evaluate(p, { x : x });
             functionQ = math.evaluate(q, { x : x });
             functionOfX = functionP/functionQ;
+            console.log("FunctionofX: " + functionOfX);
             sum += functionOfX;
         }
         else{
             functionP = math.evaluate(p, { x : x });
             functionQ = math.evaluate(q, { x : x });
             functionOfX = functionP/functionQ;
+            console.log("FunctionofX222: " + functionOfX * 2);
             sum += functionOfX * 2;
         }
         x += deltaX;
+        n--;
+        console.log("AAAAA: " + a);
+        console.log("BBBBB: " + b);
+        console.log("IIIII: " + i);
     }
 
     answer = (deltaX / 2) * sum;
@@ -71,12 +74,12 @@ function TrapezoidRule(p, q, a, b, deltaX, x, functionOfX, sum, answer){
 }
 
 //Simpson's Rule
-function SimpsonRule(p, q, a, b, deltaX, x, functionOfX, sum, answer){
+function SimpsonRule(p, q, a, b, n, deltaX, x, functionOfX, sum, answer){
 
     let counter = 0;
 
     for (let i = a; i <= b; i += deltaX){
-        if (i == a || i == b){
+        if (i == a || n == 0){
             functionP = math.evaluate(p, { x : x });
             functionQ = math.evaluate(q, { x : x });
             console.log("X: " + x);
@@ -107,6 +110,7 @@ function SimpsonRule(p, q, a, b, deltaX, x, functionOfX, sum, answer){
             console.log("3Function: " + functionOfX * 4);
         }
         x += deltaX;
+        n--;
         counter++;
     }
 
@@ -166,7 +170,8 @@ const userDefQ = (x) => {
 //===================== ROOT FINDING =====================
 
 //Check Root by using bisection
-function Bisection(a, b, p, q, deltaX){
+function Bisection(a, b, q){
+    console.log("Bisection");
     let tempA = a;
     let tempB = b;
     let functionC = 0;
@@ -175,9 +180,7 @@ function Bisection(a, b, p, q, deltaX){
 
     while(error != 0){
         c = (tempA+tempB)/2;
-        numerator = math.evaluate(p, { x : c });
-        denominator = math.evaluate(q, { x : c });
-        functionC = numerator/denominator;
+        functionC = math.evaluate(q, { x : c });
         console.log("A: " + tempA);
         console.log("B: " + tempB);
         console.log("c: " + c);
@@ -208,7 +211,8 @@ function Bisection(a, b, p, q, deltaX){
 }
 
 //Check Root by using Secant
-function Secant(a, b, p, q, deltaX){
+function Secant(a, b, q){
+    console.log("Secant");
     let tempA = a;
     let tempB = b;
     let computeError = 0;
@@ -218,88 +222,86 @@ function Secant(a, b, p, q, deltaX){
     let secFormulaAnswer = 0;
     let functionOfE = 0;
 
-    for (let i = 0; i <= 100000; i++){
-        if(a <= tempA && b >= tempB){
-            numeratorA = math.evaluate(p, { x : tempA });
-            denominatorA = math.evaluate(q, { x : tempA });
-            functionA = numeratorA/denominatorA;
+    for(let i = 0; i <= 10000; i++){
+        functionA = math.evaluate(q, { x : tempA });
+        functionB = math.evaluate(q, { x : tempB });
+        console.log("A: " + tempA);
+        console.log("B: " + tempB);
+        console.log("FunctionA: " + functionA);
+        console.log("FunctionB: " + functionB);
 
-            numeratorB = math.evaluate(p, { x : tempB });
-            denominatorB = math.evaluate(q, { x : tempB });
-            functionB = numeratorB/denominatorB;
-            console.log("A: " + tempA);
-            console.log("B: " + tempB);
-            console.log("FunctionA: " + functionA);
-            console.log("FunctionB: " + functionB);
+        //Xn+1 Formula
+        secFormula = (tempB-tempA)/(functionB-functionA);
+        secFormulaMultiply = (secFormula * functionB);
+        secFormulaAnswer = (tempB - secFormulaMultiply);
+        console.log("Secant: " + secFormulaAnswer);
 
-            //Xn+1 Formula
-            secFormula = (tempB-tempA)/(functionB-functionA);
-            secFormulaMultiply = (secFormula * functionB);
-            secFormulaAnswer = (tempB - secFormulaMultiply);
-            console.log("Secant: " + secFormulaAnswer);
+        functionOfE = math.evaluate(q, { x : secFormulaAnswer });
+        console.log("E: " + functionOfE);
 
-            numeratorE = math.evaluate(p, { x : secFormulaAnswer });
-            denominatorE = math.evaluate(q, { x : secFormulaAnswer });
-            functionOfE = numeratorE/denominatorE;
-            console.log("E: " + functionOfE);
-
-            if (functionOfE == 0){
-                console.log("FunctionE: " + functionOfE);
-                c = secFormulaAnswer;
-                return false;
-            }
-
-            //Error computation
-            computeError = (secFormulaAnswer * 10 - tempB * 10) / 10;
-            error = math.abs(computeError);
-            console.log("Error: " + error);
-
-            //Subtitution of values
-            tempA = tempB;
-            tempB = secFormulaAnswer;
+        if(secFormulaAnswer < a || secFormulaAnswer > b){
+            return true;
         }
+
+        if (functionOfE == 0){
+            console.log("FunctionE: " + functionOfE);
+            c = secFormulaAnswer;
+            return false;
+        }
+
+        //Error computation
+        computeError = (secFormulaAnswer * 10 - tempB * 10) / 10;
+        error = math.abs(computeError);
+        console.log("Error: " + error);
+
+        //Subtitution of values
+        tempA = tempB;
+        tempB = secFormulaAnswer;
     }
     return true;
 }
 
-function Newton(a, b, p ,q){
+function Newton(a, b, q){
+    console.log("Newton");
+    let tempA = a;
     let tempB = b;
     let Xn = 0
     let computeError = 0;
     let error = 1;
 
-    functionPQ = "(" + p + ")/(" + q + ")";    
-
-    while (error != 0){
-        numeratorA = math.evaluate(p, { x : tempB });
-        denominatorA = math.evaluate(q, { x : tempB });
-        functionA = numeratorA/denominatorA;
+    for(let i = 0; i <= 10000; i++){
+        functionA = math.evaluate(q, { x : tempB });
         console.log("FunctionA: " + functionA);
 
-        derivative = math.derivative(functionPQ, 'x').evaluate({x : tempB});
-        console.log(functionPQ);
+        derivative = math.derivative(q, 'x').evaluate({x : tempB});
         Xn = tempB - (functionA/derivative);
 
-        numeratorXn = math.evaluate(p, { x : Xn });
-        denominatorXn = math.evaluate(q, { x : Xn });
-        functionXn = numeratorXn/denominatorXn;
+        functionXn = math.evaluate(q, { x : Xn });
 
         console.log("Xn: " + Xn);
         console.log("Function: " + functionXn);
+
+        computeError = (Xn * 10 - tempB * 10) / 10;
+        error = math.abs(computeError);
+        console.log("Error: " + error);
+
+        if(error = 0){
+            return true;
+        }
+
+
+        if(a > Xn){
+            return true;
+        }
 
         if(functionXn == 0){
             c = Xn;
             return false;
         }
 
-        if(a > Xn){
+        if(Xn < tempA){
             return true;
         }
-
-        computeError = (Xn * 10 - tempB * 10) / 10;
-        error = math.abs(computeError);
-        console.log("Error: " + error);
-
         tempB = Xn;
 
     }
