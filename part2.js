@@ -18,6 +18,11 @@ function ReadInputs(){
     let a = parseFloat(document.getElementById("ainput").value);
     let b = parseFloat(document.getElementById("binput").value);
     let n = parseFloat(document.getElementById("ninput").value);
+
+    if(ShowWarnings()){
+        HideLoading();
+        return false;
+    }
     Calculate(p, q, a, b, n);
 }
 
@@ -129,6 +134,12 @@ function ClearInput(){
     document.getElementById("ainput").value = "";
     document.getElementById("binput").value = "";
     document.getElementById("ninput").value = "";
+
+    document.getElementById("pinput").style.borderColor = "";
+    document.getElementById("qinput").style.borderColor = "";
+    document.getElementById("ainput").style.borderColor = "";
+    document.getElementById("binput").style.borderColor = "";
+    document.getElementById("ninput").style.borderColor = "";
 }
 
 //Clear Output
@@ -323,4 +334,84 @@ function HideLoading() {
     Array.from(elms).forEach((x) => {
           x.style.visibility = "hidden";
       })
+}
+
+function ShowWarnings(){
+    const p = document.getElementById("pinput").value;
+    const q = document.getElementById("qinput").value;
+    let a = parseFloat(document.getElementById("ainput").value);
+    let b = parseFloat(document.getElementById("binput").value);
+    let n = parseFloat(document.getElementById("ninput").value);
+    let error = 0;
+    let functionError = 0;
+    console.log(a);
+
+    if (p == ""){
+        document.getElementById("pinput").style.borderColor = "red";
+        error++;
+    }
+    else{
+        document.getElementById("pinput").style.borderColor = "";
+    }
+
+    if (q == ""){
+        document.getElementById("qinput").style.borderColor = "red";
+        error++;
+    }
+    else{
+        document.getElementById("qinput").style.borderColor = "";
+    }
+    
+    if (isNaN(a)){
+        document.getElementById("ainput").style.borderColor = "red";
+        error++;
+    }
+    else{
+        document.getElementById("ainput").style.borderColor = "";
+    }
+    
+    if (isNaN(b)){
+        document.getElementById("binput").style.borderColor = "red";
+        error++;
+    }
+    else{
+        document.getElementById("binput").style.borderColor = "";
+    }
+    
+    if (isNaN(n)){
+        document.getElementById("ninput").style.borderColor = "red";
+        error++;
+    }
+    else{
+        document.getElementById("ninput").style.borderColor = "";
+    }
+
+    try{
+        functionP = math.evaluate(p, { x : 1 });
+
+    }catch{
+        document.getElementById("pinput").style.borderColor = "red";
+        error++;
+        functionError++;
+    }
+
+    try{
+        functionQ = math.evaluate(q, { x : 1 });
+    }catch{
+        document.getElementById("qinput").style.borderColor = "red";
+        
+        error++;
+        functionError++;
+    }
+
+    if(functionError > 0){
+        alert("Please Enter a Valid Function");
+    }
+    
+    if (error > 0){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
