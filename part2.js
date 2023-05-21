@@ -346,6 +346,12 @@ function ShowWarnings(){
     let functionError = 0;
     console.log(a);
 
+    if(a >= b){
+        ClearOutput();
+        document.getElementById("outputStop").innerHTML = "a cannot be higher than or equal to b";
+        error++
+    }
+
     if (p == ""){
         document.getElementById("pinput").style.borderColor = "red";
         error++;
@@ -399,7 +405,6 @@ function ShowWarnings(){
         functionQ = math.evaluate(q, { x : 1 });
     }catch{
         document.getElementById("qinput").style.borderColor = "red";
-        
         error++;
         functionError++;
     }
