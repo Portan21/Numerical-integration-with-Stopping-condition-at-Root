@@ -254,11 +254,16 @@ function Secant(a, b, q){
         functionOfE = math.evaluate(q, { x : secFormulaAnswer });
         console.log("E: " + functionOfE);
 
-        if(secFormulaAnswer < a || secFormulaAnswer > b){
-            return true;
-        }
 
         if (functionOfE == 0){
+            if(!isFinite(secFormulaAnswer)){
+                console.log("FunctionE: " + functionOfE);
+                c = secFormulaAnswer;
+                return false;
+            }
+            if(secFormulaAnswer < a || secFormulaAnswer > b){
+                return true;
+            }
             console.log("FunctionE: " + functionOfE);
             c = secFormulaAnswer;
             return false;
@@ -312,11 +317,10 @@ function Newton(a, b, q){
             return true;
         }
 
-        if(b < Xn){
-            return true;
-        }
-
         if(functionXn == 0){
+            if(b < Xn){
+                return true;
+            }
             c = Xn;
             return false;
         }
