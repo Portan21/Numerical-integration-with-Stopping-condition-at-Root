@@ -34,7 +34,7 @@ function Calculate(p, q, a, b, n){
     let sum = 0;
     let answer;
     
-    if (Bisection(a, b, q, deltaX) && Newton(a, b,q) && Secant(a, b, q, deltaX)){
+    if (Bisection(a, b, q) && Newton(a, b, q) && Secant(a, b, q)){
         TrapezoidRule(p, q, a, b, n, deltaX, x, functionOfX, sum, answer);
         SimpsonRule(p, q, a, b, n, deltaX, x, functionOfX, sum, answer);
         HideLoading();
@@ -300,8 +300,11 @@ function Newton(a, b, q){
             return true;
         }
 
-
         if(a > Xn){
+            return true;
+        }
+
+        if(b < Xn){
             return true;
         }
 
