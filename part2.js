@@ -318,6 +318,10 @@ function Newton(a, b, q){
         }
 
         if(functionXn == 0){
+            if(!isFinite(Xn)){
+                c = Xn;
+                return false;
+            }
             if(b < Xn){
                 return true;
             }
