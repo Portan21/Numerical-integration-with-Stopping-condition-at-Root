@@ -192,6 +192,7 @@ function Bisection(a, b, q){
     while(error != 0){
         c = (tempA+tempB)/2;
         functionC = math.evaluate(q, { x : c });
+        c = (c * 10) / 10;
         console.log("A: " + tempA);
         console.log("B: " + tempB);
         console.log("c: " + c);
