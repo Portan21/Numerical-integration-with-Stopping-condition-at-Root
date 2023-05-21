@@ -19,7 +19,7 @@ function ReadInputs(){
     let b = parseFloat(document.getElementById("binput").value);
     let n = parseFloat(document.getElementById("ninput").value);
 
-    if(ShowWarnings()){
+    if(CheckInput()){
         HideLoading();
         return false;
     }
@@ -192,7 +192,6 @@ function Bisection(a, b, q){
     while(error != 0){
         c = (tempA+tempB)/2;
         functionC = math.evaluate(q, { x : c });
-        c = (c * 10) / 10;
         console.log("A: " + tempA);
         console.log("B: " + tempB);
         console.log("c: " + c);
@@ -337,7 +336,7 @@ function HideLoading() {
       })
 }
 
-function ShowWarnings(){
+function CheckInput(){
     const p = document.getElementById("pinput").value;
     const q = document.getElementById("qinput").value;
     let a = parseFloat(document.getElementById("ainput").value);
