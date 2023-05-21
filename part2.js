@@ -198,6 +198,10 @@ function Bisection(a, b, q){
         console.log("functionC: " + functionC);
 
         //Subtitution of Values
+        if(tempA == c || tempB == c){
+            return true;
+        }
+
         if(functionC == 0){
             return false;
         }
@@ -265,6 +269,10 @@ function Secant(a, b, q){
         error = math.abs(computeError);
         console.log("Error: " + error);
 
+        if (error == 0){
+            return true;
+        }
+
         //Subtitution of values
         tempA = tempB;
         tempB = secFormulaAnswer;
@@ -296,7 +304,7 @@ function Newton(a, b, q){
         error = math.abs(computeError);
         console.log("Error: " + error);
 
-        if(error = 0){
+        if(error == 0){
             return true;
         }
 
