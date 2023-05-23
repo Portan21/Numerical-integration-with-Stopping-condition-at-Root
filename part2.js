@@ -43,8 +43,8 @@ function Calculate(p, q, a, b, n){
         HideLoading();
         document.getElementById("outputS").innerHTML = "S: ";
         document.getElementById("outputT").innerHTML = "T: ";
-        document.getElementById("outputStop").innerHTML = "Stopped at " + c + " ∈ [" + a + ", " + b + "] on which";
-        document.getElementById("outputStop2").innerHTML = "f(x) = (" + p + ") / (" + q + ") is not defined";
+        document.getElementById("outputStop").innerHTML = "f(x) = (" + p + ") / (" + q + ") is not defined at " + c;
+        document.getElementById("outputStop2").innerHTML = "which is inside [" + a + ", " + b + "]";
     }
 }
 
