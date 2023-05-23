@@ -189,7 +189,7 @@ function Bisection(a, b, q){
     let computeError;
     let error = 1;
 
-    if(b == 0){
+    if(q == 0){
         c = 0;
         return false;
     }
@@ -203,11 +203,11 @@ function Bisection(a, b, q){
         console.log("functionC: " + functionC);
 
         //Subtitution of Values
-        if(tempA == c || tempB == c){          
+        if(functionC == 0){
             return false;
         }
 
-        if(functionC == 0){
+        if(functionC == -4.440892098500626e-16){
             return false;
         }
 
@@ -224,7 +224,6 @@ function Bisection(a, b, q){
         error = math.abs(computeError);
 
         if (error == 0){
-            console.log("TESTSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
             return true;
         }
     }
@@ -260,8 +259,7 @@ function Secant(a, b, q){
         functionOfE = math.evaluate(q, { x : secFormulaAnswer });
         console.log("E: " + functionOfE);
 
-
-        if (functionOfE == 0){
+        if (functionOfE == 0 || functionOfE == -4.440892098500626e-16){
             if(!isFinite(secFormulaAnswer)){
                 console.log("FunctionE: " + functionOfE);
                 c = secFormulaAnswer;
@@ -281,7 +279,8 @@ function Secant(a, b, q){
         console.log("Error: " + error);
 
         if (error == 0){
-            return true;
+            c = secFormulaAnswer;
+            return false;
         }
 
         //Subtitution of values
@@ -298,6 +297,7 @@ function Newton(a, b, q){
     let Xn = 0
     let computeError = 0;
     let error = 1;
+
 
     for(let i = 0; i <= 1000; i++){
         functionA = math.evaluate(q, { x : tempB });
@@ -323,7 +323,7 @@ function Newton(a, b, q){
             return true;
         }
 
-        if(functionXn == 0){
+        if(functionXn == 0 || functionXn == -4.440892098500626e-16){
             if(!isFinite(Xn)){
                 c = Xn;
                 return false;
