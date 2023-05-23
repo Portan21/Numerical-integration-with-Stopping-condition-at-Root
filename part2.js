@@ -15,9 +15,9 @@ function StartCalculate(){
 function ReadInputs(){
     const p = document.getElementById("pinput").value;
     const q = document.getElementById("qinput").value;
-    let a = parseFloat(document.getElementById("ainput").value);
-    let b = parseFloat(document.getElementById("binput").value);
-    let n = parseFloat(document.getElementById("ninput").value);
+    let a = Number(document.getElementById("ainput").value);
+    let b = Number(document.getElementById("binput").value);
+    let n = Number(document.getElementById("ninput").value);
 
     if(CheckInput()){
         HideLoading();
@@ -189,7 +189,12 @@ function Bisection(a, b, q){
     let computeError;
     let error = 1;
 
-    while(error != 0){
+    if(b == 0){
+        c = 0;
+        return false;
+    }
+
+    for(let i = 0; i <= 1000; i++){
         c = (tempA+tempB)/2;
         functionC = math.evaluate(q, { x : c });
         console.log("A: " + tempA);
@@ -198,8 +203,8 @@ function Bisection(a, b, q){
         console.log("functionC: " + functionC);
 
         //Subtitution of Values
-        if(tempA == c || tempB == c){
-            return true;
+        if(tempA == c || tempB == c){          
+            return false;
         }
 
         if(functionC == 0){
@@ -219,6 +224,7 @@ function Bisection(a, b, q){
         error = math.abs(computeError);
 
         if (error == 0){
+            console.log("TESTSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
             return true;
         }
     }
@@ -231,13 +237,13 @@ function Secant(a, b, q){
     let tempA = a;
     let tempB = b;
     let computeError = 0;
-    let error = 0;
+    let error = 1;
     let secFormula = 0;
     let secFormulaMultiply = 0;
     let secFormulaAnswer = 0;
     let functionOfE = 0;
 
-    for(let i = 0; i <= 10000; i++){
+    for(let i = 0; i <= 1000; i++){
         functionA = math.evaluate(q, { x : tempA });
         functionB = math.evaluate(q, { x : tempB });
         console.log("A: " + tempA);
@@ -293,7 +299,7 @@ function Newton(a, b, q){
     let computeError = 0;
     let error = 1;
 
-    for(let i = 0; i <= 10000; i++){
+    for(let i = 0; i <= 1000; i++){
         functionA = math.evaluate(q, { x : tempB });
         console.log("FunctionA: " + functionA);
 
