@@ -4,6 +4,9 @@ let outputA;
 let outputB;
 let c;
 
+//const expression = 'x^2 - 4'; // Function: f(x) = x^2 - 4
+//const interval = [1, 3]; // Interval to search for a root
+
 //Initiate Calculation
 function StartCalculate(){
     ClearOutput();
@@ -27,14 +30,14 @@ function ReadInputs(){
 }
 
 //Calculate Function to initiate calculation of Trapezoid Rule and Simpson's Rule
-function Calculate(p, q, a, b, n){
+function Calculate(p, q, a, b, n, tolerance = 1e-20){
     let deltaX = ((b-a)/n);
     let x = a;
     let functionOfX;
     let sum = 0;
     let answer;
     
-    if (Bisection(a, b, q) && Newton(a, b, q) && Secant(a, b, q)){
+    if (Bisection(a, b, q, tolerance) && Newton(a, b, q, tolerance) && Secant(a, b, q, tolerance)){
         TrapezoidRule(p, q, a, b, n, deltaX, x, functionOfX, sum, answer);
         SimpsonRule(p, q, a, b, n, deltaX, x, functionOfX, sum, answer);
         HideLoading();
@@ -178,10 +181,30 @@ const userDefQ = (x) => {
     return f.get('q');
 };*/
 
+
+/*function findRoot(expression, interval) {
+  const intervalFunction = math.compile(expression);
+
+  // Evaluate the function at the lower and upper bounds of the interval
+  const lowerBound = interval[0];
+  const upperBound = interval[1];
+  const lowerResult = intervalFunction.evaluate({ x: lowerBound });
+  const upperResult = intervalFunction.evaluate({ x: upperBound });
+
+  // Check if the interval contains zero
+  if (lowerResult * upperResult <= 0) {
+    // Root is potentially within the interval
+    return true;
+  } else {
+    // No root found within the interval
+    return false;
+  }
+}*/
+
 //===================== ROOT FINDING =====================
 
 //Check Root by using bisection
-function Bisection(a, b, q){
+function Bisection(a, b, q, tolerance){
     console.log("Bisection");
     let tempA = a;
     let tempB = b;
@@ -207,6 +230,10 @@ function Bisection(a, b, q){
             return false;
         }
 
+        /*if (Math.abs(functionC) < tolerance || Math.abs(b - a) < tolerance) {
+            return false;
+        }*/
+
         if(functionC == -4.440892098500626e-16){
             return false;
         }
@@ -231,7 +258,7 @@ function Bisection(a, b, q){
 }
 
 //Check Root by using Secant
-function Secant(a, b, q){
+function Secant(a, b, q, tolerance){
     console.log("Secant");
     let tempA = a;
     let tempB = b;
@@ -259,7 +286,7 @@ function Secant(a, b, q){
         functionOfE = math.evaluate(q, { x : secFormulaAnswer });
         console.log("E: " + functionOfE);
 
-        if (functionOfE == 0 || functionOfE == -4.440892098500626e-16){
+        if (functionOfE == 0 || functionOfE == -4.440892098500626e-16 /*Math.abs(functionOfE) < tolerance*/){
             if(!isFinite(secFormulaAnswer)){
                 console.log("FunctionE: " + functionOfE);
                 c = secFormulaAnswer;
@@ -290,7 +317,7 @@ function Secant(a, b, q){
     return true;
 }
 
-function Newton(a, b, q){
+function Newton(a, b, q, tolerance){
     console.log("Newton");
     let tempA = a;
     let tempB = b;
@@ -323,7 +350,7 @@ function Newton(a, b, q){
             return true;
         }
 
-        if(functionXn == 0 || functionXn == -4.440892098500626e-16){
+        if(functionXn == 0 || functionXn == -4.440892098500626e-16 /*|| Math.abs(functionXn) < tolerance*/){
             if(!isFinite(Xn)){
                 c = Xn;
                 return false;
@@ -445,3 +472,4 @@ function CheckInput(){
         return false;
     }
 }
+
