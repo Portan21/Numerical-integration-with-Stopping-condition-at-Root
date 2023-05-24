@@ -76,6 +76,21 @@ function SimpsonRule(a, b, deltaX, x, functionOfX, sum, answer){
     document.getElementById("outputS").innerHTML = "S: " + answer;
 }
 
+//Clear Input
+function ClearInput(){
+    document.getElementById("ainput").value = "";
+    document.getElementById("binput").value = "";
+    document.getElementById("ninput").value = "";
+}
+
+//Clear Output
+function ClearOutput(){
+    document.getElementById("outputS").innerHTML = "S: ";
+    document.getElementById("outputT").innerHTML = "T: ";
+    document.getElementById("outputStop").innerHTML = "";
+}
+
+//Check input and show various errors when necessary
 function CheckInput(a, b, n){
     let error = 0;
 
@@ -122,16 +137,3 @@ function CheckInput(a, b, n){
     return true;
 }
 
-//Clear Input
-function ClearInput(){
-    document.getElementById("ainput").value = "";
-    document.getElementById("binput").value = "";
-    document.getElementById("ninput").value = "";
-}
-
-//Clear Output
-function ClearOutput(){
-    document.getElementById("outputS").innerHTML = "S: ";
-    document.getElementById("outputT").innerHTML = "T: ";
-    document.getElementById("outputStop").innerHTML = "";
-}
