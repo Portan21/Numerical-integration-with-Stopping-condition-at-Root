@@ -250,7 +250,7 @@ function Bisection(a, b, q, tolerance){
         computeError = (tempA * 10 - tempB * 10) / 10;
         error = math.abs(computeError);
 
-        if (error == 0){
+        if (error == 0 || error == 4.440892098500626e-16){
             return true;
         }
     }
@@ -305,7 +305,7 @@ function Secant(a, b, q, tolerance){
         error = math.abs(computeError);
         console.log("Error: " + error);
 
-        if (error == 0){
+        if (error == 0 || error == 4.440892098500626e-16){
             c = secFormulaAnswer;
             return false;
         }
@@ -324,6 +324,7 @@ function Newton(a, b, q, tolerance){
     let Xn = 0
     let computeError = 0;
     let error = 1;
+    let XnPrevious = 0;
 
 
     for(let i = 0; i <= 1000; i++){
@@ -331,6 +332,7 @@ function Newton(a, b, q, tolerance){
         console.log("FunctionA: " + functionA);
 
         derivative = math.derivative(q, 'x').evaluate({x : tempB});
+        XnPrevious = Xn;
         Xn = tempB - (functionA/derivative);
 
         functionXn = math.evaluate(q, { x : Xn });
@@ -342,8 +344,9 @@ function Newton(a, b, q, tolerance){
         error = math.abs(computeError);
         console.log("Error: " + error);
 
-        if(error == 0){
-            return true;
+        if(error == 0 || error == 4.440892098500626e-16){
+            c = XnPrevious;
+            return false;
         }
 
         if(a > Xn){
