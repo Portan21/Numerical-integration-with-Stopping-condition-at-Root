@@ -244,8 +244,7 @@ function Secant(a, b, q){
         error = math.abs(computeError);
 
         if (error == 0 || error == 4.440892098500626e-16){
-            c = secFormulaAnswer;
-            return false;
+            return true;
         }
 
         //Subtitution of values
